@@ -91,10 +91,14 @@ export default {
       });
 
       // Render remote stream for new peer join in the room
+      // videoの１列の数
+      let vCount = 0;
       room.on('stream', async stream => {
+        if (vCount < 3) vCount++;
         const newVideo = document.createElement('video');
         newVideo.srcObject = stream;
         newVideo.playsInline = true;
+        newVideo.style.cssText = "height:auto; width: 450px;";
         // mark peerId to find it later at peerLeave event
         newVideo.setAttribute('data-peer-id', stream.peerId);
         self.$refs.jsRemoteStreams.append(newVideo);
@@ -220,5 +224,10 @@ a {
 }
 #messages {
   padding: 10px 100px;
+}
+
+video {
+  width: 450px;
+  height: auto;
 }
 </style>
